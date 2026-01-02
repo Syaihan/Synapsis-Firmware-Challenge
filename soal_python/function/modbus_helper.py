@@ -17,7 +17,6 @@ class ModbusHelper:
     @staticmethod
     def floatToRegisters(value):
         """Mengonversi float ke dalam 2 buah holding registers (32-bit total)"""
-        # Sesuai requirement: Client membaca value dengan type Float 2 desimal
         packed = struct.pack(">f", round(value, 2))
         return struct.unpack(">HH", packed)
 

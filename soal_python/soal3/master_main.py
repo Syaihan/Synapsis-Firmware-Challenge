@@ -17,7 +17,6 @@ class MyModbusMaster:
             while True:
                 current_time = time.time()
                 
-                # Setiap 5 detik baca register 0, 1, 2
                 regs = self.client.read_holding_registers(0, 3)
                 if regs:
                     suhu = regs[0] / 100.0
@@ -27,7 +26,6 @@ class MyModbusMaster:
                     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     print(f"({timestamp} GMT+7) | Suhu: {suhu}°C | Hum: {hum}% | Status: {status}")
 
-                # Setiap 30 detik melakukan control/write ke register 2 (0/1 bergantian)
                 if current_time - last_control_time >= 30:
                     self.client.write_single_register(2, self.toggle_status)
                     print(f"---> Master: Change Status to {self.toggle_status}")
